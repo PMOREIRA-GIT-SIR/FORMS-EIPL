@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<title>HTML forms</title>
+		<script>
+			function valida(element) {
+				//debugger;
+				//alert(document.forms["f01"].elements["iname"].value);
+				//alert(document.all["idate"].value);
+				
+				var valid = true;
+				// iname field must have at least 5 chars
+				element = document.getElementById("iname");
+				if (element.value.length < 5) {
+					valid=false;
+					element.style.borderColor = "red";
+				}
+				// gender must be checked
+				
+				// get all elements with the same name (= gender)
+				element = document.getElementsByName("gender");
+				var evalid = false;
+				for(var i=0; i < element.length; i++ ){
+					
+					if (element[i].checked) {
+						evalid = true;
+						break;
+					}
+				}
+				if (!evalid) {
+					alert("gender must be checked");
+				}
+				
+				valid = evalid && valid;
+
+				if (valid) return true;
+				else return false;
+			}
+			
+			function v(n,elem) {
+				if (elem.value.length < n) {
+					 elem.style.backgroundColor = "pink";
+				} else {
+					 elem.style.backgroundColor = "lime";
+				}
+			}
+		</script>
+		<style>
+			.myform fieldset {
+				background-color:#DDDDFF;
+				width: 600px;
+				border-radius:10px;
+			}
+			.myform input[type="text"], textarea {
+				border-radius: 10px;
+			}
+			.myform input[pattern] {
+				background-color: pink;
+			}
+			.myform fieldset fieldset {
+				width : auto;
+			}
+			.myform ol {
+				margin : 0px;
+				padding: 0px;
+			}
+			.myform li {
+				list-style: none;
+			}
+			.myform label {
+				width: 150px;
+				display : inline-block;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<form id="f01" class="myform" action="show.php" method="get" onsubmit="return valida(this);">
+				<input type="hidden" name="hinput" value="xpto" />
+			<fieldset>
+				<legend>Biographical Data</legend>
+				<ol>
+				<li>
+				<label for="iname">name</label>
+				<input id="iname" type="text" name="name" onkeydown="v(5,this);"/>
+				</li>
+				<li>
+				<label for="iage">age</label>
+				<input id="iage" type="text" name="age" required="required">
+				</li>
+				<li>
+				<label for="ipostal">Postal Code</label>
+				<input id="ipostal" type="text" name="postalcode" pattern="\d{4}-\d{3}">
+				</li>
+				<li>
+				<fieldset>
+					<legend>Gender</legend>
+					<li>
+					<label for="igenderm"> Male </label><input id="igenderm" type="radio" name="gender" value="M">
+					</li>
+					<li>
+					<label for="igenderf"> Female </label><input id="igenderf" type="radio" name="gender" value="F">
+					</li>
+				</fieldset>
+				</li>
+				<li>
+				<label for="idate">Date</label>
+				<input id="idate" type="date" name="date"/> 
+				</li>
+				<li>
+				<label for="icountry">Country</label>
+				<select size="1" name="country[]" id="icountry">
+					<option selected ="selected" disabled="disabled">select your country</option>
+					<optgroup label="Europe">
+					<option value="pt">Portugal</option>
+					<option value="es">Spain</option>
+					</optgroup>
+					<optgroup label="Ocenania">
+					<option value="tv">Tuvalu</option>
+					</optgroup>
+					<optgroup label="America">
+					<option value="br">Brazil</option>
+					<option value="us">U.S.A.</option>
+					</optgroup>
+				</select>
+				</li>
+				</ol>
+			</fieldset>
+			<fieldset>
+				<legend>Foreign Languages</legend>
+				<label for="ifpt">Portuguese</label> <input id="ifpt" name="language[]" type="checkbox" value="pt">
+				<label for="ifes">Spanish</label> <input id="ifes" name="language[]" type="checkbox" value="es">
+				<label for="iffr">French</label> <input id="iffr" name="language[]" type="checkbox" value="fr">
+				<label for="ifen">English</label> <input checked="checked" id="ifen" name="language[]" type="checkbox" value="en">	
+			</fieldset>
+			<fieldset>
+				<legend>Comments</legend>
+				<textarea name="comment" cols="50" rows="5"></textarea>
+			</fieldset>
+			<fieldset>
+				<legend>Form Submission</legend>
+				<input type="submit" value="Send Form"/>
+				<input type="reset"  value="Reset Form"/>
+			</fieldset>
+		</form>
+	</body>
+</html>

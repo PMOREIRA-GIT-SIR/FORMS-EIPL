@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/screen.css"/>
+		<style>
+			label.error { color: lime;}
+		</style>
+		
+		<script src="jQuery/jquery-1.9.0.js"></script>
+		<script src="jQuery/jquery.validate.js"></script>
+		
+		<script>
+			$.validator.setDefaults({
+				submitHandler: function() { alert("submitted!"); }
+			});
+			
+			
+			$(document).ready( function () {
+				$("#form1").validate(
+					{
+						rules : {
+							nname : {
+								required : true,
+								minlength : 3
+								},
+							nemail : {
+								required : true,
+								email : true
+								},
+							fpass : {
+								required: true,
+								minlength : 6
+								},
+							fcpass : {
+								required: true,
+								minlength : 6,
+								equalTo : "#fpass"								
+								},
+							nusername : {
+								required : true,
+								rangelength : [5,5],
+								remote : {
+									url : "checkuser.php",
+									data : {
+										username : function() {
+           								 	return $( "#fusername" ).val();
+											}
+										}
+									}
+								}
+							},
+						messages : {
+							nname : "ola",
+							nemail : "insert a valid email :)",
+							fpass : "password min : 6",
+							fcpass : "password does not match",
+							nusername : {
+								required: "insira um username",
+								rangelength :"com tamanho 5",
+								remote: "ocupado!"
+							}
+						}
+						
+					}
+				);
+			})
+		</script>
+		<style>
+			<style type="text/css">
+				
+				#form1{ width: 500px; }
+				#form1 label { width: 250px; }
+				#form1 label.error, input[type="submit"] { margin-left: 253px; }
+				#form1 { width: 670px; }
+				#form1 label.error {
+					margin-left: 10px;
+					width: auto;
+					/* display: inline; */
+				}
+				#form1 label.error { display: inline;}
+
+		</style>
+	</head>
+	<body>
+		<form id="form1" action="echo.php" method="get">
+			<p>
+			<label for="fname">name (minimum length : 3 chars)</label>
+			<input type="text" name="nname" id="fname"/>
+			</p>
+			<p>
+			<label for="fusername">username</label>
+			<input type="text" name="nusername" id="fusername"/>
+			</p>
+			<p>
+			<label for="femail">email</label>
+			<input type="text" name="nemail" id="femail"/>
+			</p>
+			<p>
+			<label for="fpass">password</label>
+			<input type="password" name="fpass" id="fpass"/>
+			</p>
+			<p>
+			<label for="fcpass">confirm password</label>
+			<input type="password" name="fcpass" id="fcpass"/>
+			</p>
+			<p>
+			<input type="submit"/>
+			<input type="reset"/>
+			</p>
+			
+		</form>
+	</body>
+</html>
